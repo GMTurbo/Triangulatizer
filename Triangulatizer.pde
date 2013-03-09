@@ -1,11 +1,11 @@
 import org.processing.wiki.triangulate.*;
 import processing.video.*; 
 
-Movie myMovie;
+//Movie myMovie;
 PImage img;
 ArrayList triangles = new ArrayList();
 ArrayList points = new ArrayList();
-int resolution = 15;
+int resolution = 3*4;
 boolean run = true;
 boolean cam = false;
 Capture camera= null;
@@ -47,9 +47,11 @@ void captureEvent(Capture c) {
 }
 
 void model(){
-  for(int i = 0 ; i < width; i+=resolution)
-    for(int j = 0 ; j < height; j+=resolution)
-      if(random(0,1) >= 0.25)
+  //int resolutionXStep = random(1,2) * resolution;
+  //int resolutionYStep = random(1,2) * resolution;
+  for(int i = 0 ; i < width; i+=random(0.5,5) * resolution)
+    for(int j = 0 ; j < height; j+=random(0.5,5) * resolution)
+      //if(random(0,1) >= 0.25)
         points.add(new PVector(i, j, random(TWO_PI)));
       //else{
         //points.add(new PVector(i+ random(0,resolution), j + random(0,resolution), random(TWO_PI)));
@@ -94,6 +96,7 @@ void draw(){
     model();
     view();
   //}
+  println("frame done");
 }
 
 void view(){
@@ -102,11 +105,11 @@ void view(){
   fill(70, 70, 250);
   
   // draw the points
-  for (int i = 0; i < points.size(); i++) {
+  /*for (int i = 0; i < points.size(); i++) {
     PVector p = (PVector)points.get(i);
     ellipse(p.x, p.y, 2.5, 2.5);
   }
- 
+ */
   // draw the mesh of triangles
   stroke(0, 40);
   noStroke();
@@ -115,7 +118,7 @@ void view(){
   //texture(img);
   for (int i = 0; i < triangles.size(); i++) {
     Triangle t = (Triangle)triangles.get(i);
-    fill(get(ceil((t.p1.x + t.p2.x + t.p3.x)/3f), ceil((t.p1.y + t.p2.y + t.p3.y)/3f)));
+    fill(get(round((t.p1.x + t.p2.x + t.p3.x)/3f), round((t.p1.y + t.p2.y + t.p3.y)/3f)));
     vertex(t.p1.x, t.p1.y);
     vertex(t.p2.x, t.p2.y);
     vertex(t.p3.x, t.p3.y);
@@ -145,8 +148,8 @@ void keyPressed(){
      break;
      case DOWN:
       resolution /= 2;
-      if(resolution < 4)
-        resolution = 4;
+      if(resolution < 2)
+        resolution = 2;
      break;
      default:
      break;
