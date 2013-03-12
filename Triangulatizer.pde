@@ -11,34 +11,25 @@ ArrayList points = new ArrayList();
 int resolution = 3*4;
 boolean run = true;
 boolean cam = false;
-Capture camera= null;
+//Capture camera= null;
 ArrayList<String> images = new ArrayList<String>();
 int imageIndex = 0;
 int saveCount = 0;
 boolean RunTriangles = false;
-GifMaker gifExport;
+//GifMaker gifExport;
 
 void setup(){
 //
-images.add("http://24.media.tumblr.com/d64ca51cafd5dfd64bc74af3f7b3855d/tumblr_miws4i0FBn1qax2qko1_500.gif");
- images.add("http://24.media.tumblr.com/e8b6069d637ead5e43df69e1b28318e7/tumblr_mj53peFukI1s79rl8o1_500.jpg");
- images.add("http://25.media.tumblr.com/b670405752d8c1f773472f497d3b9b70/tumblr_mh1ieelcJK1rk3dwvo1_400.gif");
- 
- images.add("http://24.media.tumblr.com/600d6bb1bc8b07f9e686cb8e9c93c49b/tumblr_mfqdmn2X9r1rhzp74o1_500.jpg");
- images.add("http://24.media.tumblr.com/836a1e4c6c374792a95116384a575976/tumblr_meveg1mKSe1r87gdto1_500.gif");
- 
- images.add("http://25.media.tumblr.com/tumblr_mec7fatw3C1rsl8k7o1_400.gif");
- images.add("http://25.media.tumblr.com/e1f27495a2b8ebb3018b00d26cb13a08/tumblr_mjgevbC6Ry1r95iqpo1_500.jpg");
  
  //porn
- images.add("http://25.media.tumblr.com/00dce68ce93e5921b6efe3b75ffc0ccb/tumblr_mjaeesWLfd1rsl8k7o1_400.gif");
- images.add("http://25.media.tumblr.com/f6e82a53e71e2f9c51998e67eaea25e7/tumblr_mhyh4gQdnR1rsjzk4o1_500.jpg");
- images.add("http://24.media.tumblr.com/tumblr_mavhmcWfT81ryul20o1_500.jpg");
- images.add("http://25.media.tumblr.com/6314479c2c31cf44962c042cc74b5c86/tumblr_mhnbh2weOO1qewuyto1_500.jpg");
- images.add("http://24.media.tumblr.com/tumblr_ltk5q490WB1qa3t46o1_500.jpg");
- images.add("http://24.media.tumblr.com/8e4b040a064110f179d1ab0f178fd8f8/tumblr_mg4vikKxPU1rpg9y6o1_500.jpg");
- images.add("http://24.media.tumblr.com/690f90e67209b1d14e3b6abdf5ab912b/tumblr_mf77b3k2ku1rm4e7wo1_250.gif");
-
+ //images.add("http://25.media.tumblr.com/1e44f8f9788f94ffe5e525525234e851/tumblr_mhbifxtwSJ1rq6vz1o1_500.gif");
+images.add("http://24.media.tumblr.com/tumblr_m826fmkpdP1qgu6fio1_500.jpg");
+ images.add("http://24.media.tumblr.com/cc3bba07ab5c867cb2ad6c5c8ad63172/tumblr_mjgpnjHlEY1qjj0p8o1_500.gif");
+ images.add("http://25.media.tumblr.com/12edf9036677111a8204da7dc6f18728/tumblr_mi4gg3hFIt1r1hjx6o1_500.gif");
+ images.add("http://24.media.tumblr.com/3f078e1f669cd37d10f5889bd2bd6125/tumblr_mjdupxRdWl1rsnzy2o1_500.gif");
+ images.add("http://24.media.tumblr.com/7224d114db902771521a3e4667ed19c2/tumblr_mjh725kZ6E1rlitlno1_500.gif");
+ images.add("http://25.media.tumblr.com/9cbfef78b21c82126fda10cd6dd8d734/tumblr_mhhqjaAa3G1rwkc5bo1_400.gif");
+ images.add("http://25.media.tumblr.com/c82b077207735dfe31a0c73f5c50662b/tumblr_mjijqvby5N1rn0oofo1_500.jpg");
  if(images.get(imageIndex).indexOf(".gif") == -1){
    
          img = loadImage(images.get(imageIndex));
@@ -61,11 +52,11 @@ images.add("http://24.media.tumblr.com/d64ca51cafd5dfd64bc74af3f7b3855d/tumblr_m
  //size(497 , 700);
  smooth();
  reset(); 
- frameRate(12);
+ frameRate(5);
  
- gifExport = new GifMaker(this, "export.gif");
- gifExport.setRepeat(0);        // make it an "endless" animation
- gifExport.setTransparent(255,255,255);  // black is transparent
+ //gifExport = new GifMaker(this, "export.gif");
+ //gifExport.setRepeat(0);        // make it an "endless" animation
+ //gifExport.setTransparent(255,255,255);  // black is transparent
  gifFrameCount = 0;
  model();
  
@@ -74,7 +65,9 @@ images.add("http://24.media.tumblr.com/d64ca51cafd5dfd64bc74af3f7b3855d/tumblr_m
 void captureEvent(Capture c) {
   c.read();
 }
+
 PImage[] FRAMES;
+
 void model(){
   //int resolutionXStep = random(1,2) * resolution;
   //int resolutionYStep = random(1,2) * resolution;
@@ -113,7 +106,15 @@ void draw(){
       img = FRAMES[gifFrameCount];
       gifFrameCount++;
       gifFrameCount = gifFrameCount % FRAMES.length;
-      if(saveGIFFrame){
+      
+      //if
+      //(gifFrameCount == FRAMES.length-2 || !RunTriangles){
+       // gifExport.finish();
+       // RunTriangles = false;
+      //}
+  }
+  
+  if(saveGIFFrame){
         println("Saving gif..");
         saveFrame("gif" + gifFrameCount);
         //gifExport.setDelay(100);
@@ -125,12 +126,6 @@ void draw(){
        savedAlready = true;
       }
       
-      //if
-      //(gifFrameCount == FRAMES.length-2 || !RunTriangles){
-       // gifExport.finish();
-       // RunTriangles = false;
-      //}
-  }
   if(img == null || !run)
     return;
     
@@ -147,7 +142,7 @@ void draw(){
        image(img, 0,0); 
     }
   }else{
-    image(camera, 0, 0);
+    //image(camera, 0, 0);
   }
   reset();
   if(run && RunTriangles){
@@ -210,14 +205,18 @@ void keyPressed(){
         resolution = 2;
      break;
      case LEFT:
-     --imageIndex;
+       --imageIndex;
        if(imageIndex == -1)
          imageIndex = images.size();
-       imageIndex = imageIndex % (images.size());
+       imageIndex = abs(imageIndex) % (images.size());
+       LoadImage(imageIndex);
+       println(imageIndex);
      break;
      case RIGHT:
      ++imageIndex;
-       imageIndex = imageIndex % (images.size());
+       imageIndex = abs(imageIndex) % (images.size());
+       println(imageIndex);
+       LoadImage(imageIndex);
      break;
      case ENTER:
        RunTriangles = !RunTriangles;
@@ -238,28 +237,15 @@ void keyPressed(){
       save("triangulized" + (saveCount++) + ".png"); 
     break;
     case 'c': // toggle webcam
-      cam = !cam;
-      if(camera == null)  camera = new Capture(this);
-      if( cam ) {camera.start(); frame.setSize(640, 480);}
-      else camera.stop();
+      //cam = !cam;
+      //if(camera == null)  camera = new Capture(this);
+      //if( cam ) {camera.start(); frame.setSize(640, 480);}
+      //else camera.stop();
     break;
     case 't': // toggle image
         ++imageIndex;
-       imageIndex = imageIndex % (images.size());
-       println("imageIndex = " + imageIndex);
-       if(images.get(imageIndex).indexOf(".gif") == -1){
-         img = loadImage(images.get(imageIndex));
-         //frame.setSize(img.width, img.height);
-         gifRunning = false;
-       }else{
-        // myAnimation.stop();
-         myAnimation = new Gif(this, images.get(imageIndex));
-         FRAMES = myAnimation.getPImages();
-         gifFrameCount = 0;
-         gifRunning = true;
-         //frame.setSize(300, 200);
-         
-       }
+       imageIndex = abs(imageIndex) % (images.size());
+       LoadImage(imageIndex);
        //insets = frame.getInsets();
        
     break;
@@ -267,6 +253,24 @@ void keyPressed(){
   println("resolution = " + resolution);
   
   
+}
+
+void LoadImage(int imageIndex){
+  
+  println("imageIndex = " + imageIndex);
+  
+  if(images.get(imageIndex).indexOf(".gif") == -1){
+     img = loadImage(images.get(imageIndex));
+     //frame.setSize(img.width, img.height);
+     gifRunning = false;
+   }else{
+    // myAnimation.stop();
+     myAnimation = new Gif(this, images.get(imageIndex));
+     FRAMES = myAnimation.getPImages();
+     gifFrameCount = 0;
+     gifRunning = true;
+   }
+   
 }
 boolean savedAlready = true;
 void keyReleased(){
